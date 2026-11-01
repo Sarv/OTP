@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 const _channel = MethodChannel('com.sarv.otp/secure_display');
@@ -21,7 +20,7 @@ Future<void> enableSecureDisplay({
   required Color switcherCover,
   required void Function() onScreenshot,
 }) async {
-  if (!Platform.isIOS) return;
+  if (defaultTargetPlatform != TargetPlatform.iOS) return;
   _channel.setMethodCallHandler((call) async {
     if (call.method == 'screenshotTaken') onScreenshot();
   });
