@@ -4,6 +4,15 @@
 
 <h1 align="center">Sarv OTP</h1>
 
+<p align="center">
+  <a href="https://github.com/Sarv/OTP/releases/latest"><img src="https://img.shields.io/github/v/release/Sarv/OTP?label=version" alt="Latest version" /></a>
+  <a href="https://github.com/Sarv/OTP/actions/workflows/tests.yml"><img src="https://github.com/Sarv/OTP/actions/workflows/tests.yml/badge.svg" alt="Tests" /></a>
+  <a href="https://github.com/Sarv/OTP/actions/workflows/tests.yml"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FSarv%2FOTP%2Fbadges%2Fcoverage.json" alt="Code coverage" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Sarv/OTP" alt="License: Apache-2.0" /></a>
+  <img src="https://img.shields.io/badge/platform-Android%20%7C%20iOS-blue" alt="Platforms: Android and iOS" />
+  <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-3.47-02569B?logo=flutter" alt="Built with Flutter 3.47" /></a>
+</p>
+
 <p align="center"><a href="https://sarv.github.io/OTP/"><strong>sarv.github.io/OTP</strong></a> — downloads, screenshots and features</p>
 
 <p align="center">
