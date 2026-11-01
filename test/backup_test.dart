@@ -49,5 +49,46 @@ void main() {
         throwsA(isA<BackupDecryptException>()),
       );
     });
+
+    test('rejects a file that is not JSON', () async {
+      expect(
+        () => decryptBackup('not json', 'pw'),
+        throwsA(isA<BackupDecryptException>()),
+      );
+    });
+
+    test('rejects a backup from an unsupported version', () async {
+      expect(
+        () => decryptBackup(
+          '{"format":"sarv-authenticator-backup","version":99}',
+          'pw',
+        ),
+        throwsA(
+          isA<BackupDecryptException>()
+              .having((e) => e.message, 'message', contains('99')),
+        ),
+      );
+    });
+
+    test('rejects a backup with missing fields', () async {
+      expect(
+        () => decryptBackup(
+          '{"format":"sarv-authenticator-backup","version":1}',
+          'pw',
+        ),
+        throwsA(isA<BackupDecryptException>()),
+      );
+    });
+
+    test('refuses to encrypt without a passphrase', () async {
+      expect(() => encryptBackup(accounts, ''), throwsArgumentError);
+    });
+
+    test('describes itself when printed', () {
+      expect(
+        const BackupDecryptException('bad').toString(),
+        'BackupDecryptException: bad',
+      );
+    });
   });
 }
