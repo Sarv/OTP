@@ -1,0 +1,60 @@
+name: Tests
+
+# Analyze and test every push and pull request. On main, the line-coverage
+# figure is also published to the `badges` branch as a shields.io endpoint
+# file, which the README's coverage badge reads — no third-party service.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the coverage badge to the `badges` branch
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.7 # keep in step with the local toolchain
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test with coverage
+        run: flutter test --coverage
+
+      - name: Compute line coverage
+        id: cov
+        run: |
+          awk -F'[:,]' '/^LF:/{found+=$2} /^LH:/{hit+=$2}
+            END{printf "percent=%.1f\n", found ? 100*hit/found : 0}' coverage/lcov.info >> "$GITHUB_OUTPUT"
+
+      - name: Publish coverage badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          PERCENT: ${{ steps.cov.outputs.percent }}
+        run: |
+          color=$(awk -v pct="$PERCENT" 'BEGIN{
+            print (pct >= 80 ? "brightgreen" : pct >= 60 ? "yellowgreen" : pct >= 40 ? "yellow" : "red") }')
+          mkdir -p "$RUNNER_TEMP/badges" && cd "$RUNNER_TEMP/badges"
+          git init -q -b badges
+          printf '{"schemaVersion":1,"label":"coverage","message":"%s%%","color":"%s"}\n' "$PERCENT" "$color" > coverage.json
+          git add coverage.json
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "chore(badges): update coverage to ${PERCENT}%"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" badges
