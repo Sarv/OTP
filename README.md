@@ -42,7 +42,8 @@ Download links for every platform are on the [Sarv OTP website](https://sarv.git
   and sideload it (the one-time "allow unknown apps" prompt is a property of
   installing outside the Play Store, not a warning about the app). See
   [RELEASING.md](RELEASING.md).
-- **iOS** — distributed through **TestFlight / the App Store**; iOS has no
+- **iOS** — install from the
+  [App Store](https://apps.apple.com/app/sarv-otp/id6826185824); iOS has no
   sideloadable equivalent of an APK. See [RELEASING-iOS.md](RELEASING-iOS.md) for
   the signing and submission setup.
 
