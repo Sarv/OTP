@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Sarv OTP is now on the [App Store](https://apps.apple.com/app/sarv-otp/id6826185824) for iPhone and iPad. The website and README link to it, replacing the earlier TestFlight-only route.
+
 ### Fixed
 - "Go back" on the scanner's camera-unavailable screen now works; the QR frame was drawn over the button and swallowed the tap.
 - Exporting an encrypted backup now shows a loader while the backup is encrypted, instead of a pause with no feedback before the share sheet opens.
