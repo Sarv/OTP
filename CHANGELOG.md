@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Sarv OTP is now on [Google Play](https://play.google.com/store/apps/details?id=com.sarv.otp). The website and README link to it; the signed APK from GitHub releases is still available for sideloading.
 - Sarv OTP is now on the [App Store](https://apps.apple.com/app/sarv-otp/id6826185824) for iPhone and iPad. The website and README link to it, replacing the earlier TestFlight-only route.
 
 ### Fixed
