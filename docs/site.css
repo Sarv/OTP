@@ -37,8 +37,6 @@ p  { margin: 0; }
 .store-badge { position: relative; display: inline-flex; border-radius: var(--r-md); }
 .store-badge img { display: block; height: 52px; width: auto; }
 .store-badge:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
-.store-soon { cursor: default; }
-.store-soon .badge { position: absolute; bottom: calc(100% + var(--space-1)); right: 0; } /* sits above, never over, the badge artwork */
 
 /* Local override: the design system underlines every <a> on hover, which reads
    as a stray text link on anchors styled as buttons. */
