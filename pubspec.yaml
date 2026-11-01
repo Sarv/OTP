@@ -39,6 +39,11 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  # Platform-interface fakes so the backup service's file, share and temp-dir
+  # plumbing can be unit-tested without a device.
+  plugin_platform_interface: ^2.1.8
+  path_provider_platform_interface: ^2.1.2
+  share_plus_platform_interface: ^5.0.2
   # Generates platform launcher icons from the PNGs in assets/.
   flutter_launcher_icons: ^0.14.1
   # Branded native splash so the cold-start gap shows the logo, not a blank screen.
