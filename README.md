@@ -7,9 +7,9 @@
 <p align="center"><a href="https://sarv.github.io/OTP/"><strong>sarv.github.io/OTP</strong></a> — downloads, screenshots and features</p>
 
 <p align="center">
-  <a href="https://play.google.com/store/apps/details?id=com.sarv.otp"><img src="docs/assets/badges/google-play.png" alt="Get it on Google Play" height="52" /></a>
+  <a href="https://play.google.com/store/apps/details?id=com.sarv.otp"><img src="docs/assets/badges/google-play.png" alt="Get it on Google Play" width="175" height="52" /></a>
   &nbsp;
-  <a href="https://apps.apple.com/app/sarv-otp/id6826185824"><img src="docs/assets/badges/app-store.svg" alt="Download on the App Store" height="52" /></a>
+  <a href="https://apps.apple.com/app/sarv-otp/id6826185824"><img src="docs/assets/badges/app-store.svg" alt="Download on the App Store" width="156" height="52" /></a>
 </p>
 
 A clean-room, **Google Authenticator-compatible** TOTP/HOTP app built with Flutter
