@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automated tests now cover 98% of the app's code (up from about 52%): the code generator, encrypted backups, account storage, app lock, and the main screens and flows. A Tests workflow runs them on every push and pull request, and the README shows the current coverage.
 
 ### Fixed
+- Exporting a backup now confirms it worked: after you send the file to Drive, Files or another app, Settings shows "Backup exported". Before, you came back to an unchanged screen with no sign the export had succeeded. Closing the share sheet without choosing anywhere still shows nothing.
 - "Go back" on the scanner's camera-unavailable screen now works; the QR frame was drawn over the button and swallowed the tap.
 - Exporting an encrypted backup now shows a loader while the backup is encrypted, instead of a pause with no feedback before the share sheet opens.
 - Importing a backup now shows a loader while it is decrypted and saved, until the result or an error appears.
