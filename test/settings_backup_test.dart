@@ -15,9 +15,12 @@ const _demoAccount = Account(
 /// Records what Settings hands to the platform layer instead of opening
 /// native sheets.
 class _RecordingBackup implements BackupService {
-  _RecordingBackup({this.pickedContents});
+  _RecordingBackup({this.pickedContents, this.shareCompletes = true});
 
   final String? pickedContents;
+
+  /// What the share sheet reports: true when a destination was chosen.
+  final bool shareCompletes;
   Rect? sharedOrigin;
   String? sharedPath;
 
@@ -29,9 +32,10 @@ class _RecordingBackup implements BackupService {
       '/tmp/backup.json';
 
   @override
-  Future<void> share(String path, {required Rect origin}) async {
+  Future<bool> share(String path, {required Rect origin}) async {
     sharedPath = path;
     sharedOrigin = origin;
+    return shareCompletes;
   }
 
   @override
@@ -86,6 +90,41 @@ void main() {
     );
     expect(origin.contains(rowCentre), isTrue);
     expect(find.textContaining('Export failed'), findsNothing);
+  });
+
+  testWidgets('export confirms once the backup is handed to another app',
+      (tester) async {
+    await openSettings(
+      tester,
+      backup: _RecordingBackup(),
+      accounts: [_demoAccount],
+    );
+
+    await tester.tap(find.text('Export encrypted backup'));
+    await tester.pumpAndSettle();
+    await _enterPassphrase(tester, confirm: true);
+
+    expect(
+      find.text('Backup exported. Keep your passphrase safe.'),
+      findsOneWidget,
+    );
+    expect(find.text('Encrypt backup'), findsNothing);
+  });
+
+  testWidgets('export stays quiet when the share sheet is dismissed',
+      (tester) async {
+    await openSettings(
+      tester,
+      backup: _RecordingBackup(shareCompletes: false),
+      accounts: [_demoAccount],
+    );
+
+    await tester.tap(find.text('Export encrypted backup'));
+    await tester.pumpAndSettle();
+    await _enterPassphrase(tester, confirm: true);
+
+    expect(find.textContaining('Backup exported'), findsNothing);
+    expect(find.text('Encrypt backup'), findsNothing);
   });
 
   testWidgets('import adds the accounts from the picked backup',

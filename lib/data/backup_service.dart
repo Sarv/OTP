@@ -42,12 +42,15 @@ class BackupService {
   /// Opens the system share sheet for the backup file at [path] so the user
   /// can save or send it. [origin] is the global rect of the control that
   /// opened it: iOS anchors the sheet there and rejects the share without it.
-  Future<void> share(String path, {required Rect origin}) async {
-    await Share.shareXFiles(
+  /// Returns false only when the user dismissed the sheet without choosing a
+  /// destination.
+  Future<bool> share(String path, {required Rect origin}) async {
+    final result = await Share.shareXFiles(
       [XFile(path, mimeType: 'application/json')],
       subject: 'Sarv OTP backup',
       sharePositionOrigin: origin,
     );
+    return result.status != ShareResultStatus.dismissed;
   }
 
   /// Lets the user pick a backup file and returns its contents, or null if the

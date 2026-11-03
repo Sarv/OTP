@@ -111,7 +111,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           passphrase: passphrase,
         ),
       );
-      await widget.backup.share(path, origin: _globalRect(_exportRowKey));
+      final shared =
+          await widget.backup.share(path, origin: _globalRect(_exportRowKey));
+      // Without this, returning from Drive or Files left Settings exactly as it
+      // was, with no sign the export had worked.
+      if (shared) _toast('Backup exported. Keep your passphrase safe.');
     } catch (error) {
       _toast('Export failed: $error');
     }

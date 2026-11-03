@@ -20,6 +20,9 @@ class _FakePaths extends PathProviderPlatform with MockPlatformInterfaceMixin {
 }
 
 class _FakeShare extends SharePlatform with MockPlatformInterfaceMixin {
+  _FakeShare([this.status = ShareResultStatus.success]);
+
+  final ShareResultStatus status;
   List<XFile>? files;
   Rect? origin;
 
@@ -33,7 +36,7 @@ class _FakeShare extends SharePlatform with MockPlatformInterfaceMixin {
   }) async {
     this.files = files;
     origin = sharePositionOrigin;
-    return const ShareResult('done', ShareResultStatus.success);
+    return ShareResult('', status);
   }
 }
 
@@ -72,7 +75,8 @@ void main() {
   });
   tearDown(() => temp.deleteSync(recursive: true));
 
-  test('writes an encrypted backup that decrypts back to the accounts', () async {
+  test('writes an encrypted backup that decrypts back to the accounts',
+      () async {
     final path = await service.writeEncryptedBackup(
       accounts: accounts,
       passphrase: 'pw',
@@ -88,15 +92,34 @@ void main() {
     expect(restored.single.issuer, 'GitHub');
   });
 
-  test('shares the file anchored to the control that opened the sheet', () async {
+  test('shares the file anchored to the control that opened the sheet',
+      () async {
     final share = _FakeShare();
     SharePlatform.instance = share;
     const origin = Rect.fromLTWH(10, 20, 30, 40);
 
-    await service.share('${temp.path}/backup.sauthbackup', origin: origin);
+    final shared =
+        await service.share('${temp.path}/backup.sauthbackup', origin: origin);
 
+    expect(shared, isTrue);
     expect(share.files!.single.path, '${temp.path}/backup.sauthbackup');
     expect(share.origin, origin);
+  });
+
+  test('reports a dismissed share sheet as not shared', () async {
+    SharePlatform.instance = _FakeShare(ShareResultStatus.dismissed);
+    expect(
+      await service.share('${temp.path}/b.sauthbackup', origin: Rect.zero),
+      isFalse,
+    );
+  });
+
+  test('counts a share it cannot track as shared', () async {
+    SharePlatform.instance = _FakeShare(ShareResultStatus.unavailable);
+    expect(
+      await service.share('${temp.path}/b.sauthbackup', origin: Rect.zero),
+      isTrue,
+    );
   });
 
   group('pickBackup', () {
@@ -117,7 +140,8 @@ void main() {
     });
 
     test('reads the picked file from disk when no bytes come back', () async {
-      final file = File('${temp.path}/picked.sauthbackup')..writeAsStringSync('[]');
+      final file = File('${temp.path}/picked.sauthbackup')
+        ..writeAsStringSync('[]');
       FilePicker.platform = _FakePicker(
         FilePickerResult([PlatformFile(name: 'p', size: 2, path: file.path)]),
       );
