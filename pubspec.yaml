@@ -1,7 +1,7 @@
 name: sarv_authenticator
 description: A clean-room TOTP/HOTP authenticator (Google Authenticator-compatible), themed with the Sarv design system.
 publish_to: "none"
-version: 0.1.2+6
+version: 0.1.3+7
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
