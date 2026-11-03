@@ -21,7 +21,7 @@ the build number — the same rule as iOS (see
 -> Run workflow**, or:
 
 ```bash
-gh workflow run release-android.yml -f version=0.1.2
+gh workflow run release-android.yml -f version=0.1.3
 ```
 
 Leave the build number blank and the workflow uses its run number, which only

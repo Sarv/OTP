@@ -15,9 +15,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Marketing version (CFBundleShortVersionString); 0.1.2 is the approved version"
+        description: "Marketing version (CFBundleShortVersionString); 0.1.3 is the current version"
         required: true
-        default: "0.1.2"
+        default: "0.1.3"
       build_number:
         description: "Build number (CFBundleVersion); leave blank to use the workflow run number"
         required: false

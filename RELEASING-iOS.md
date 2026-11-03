@@ -18,7 +18,7 @@ Store Connect is unique (it rejects a repeated build number).
 
 ### Shipping a new build of the approved version
 
-**0.1.2 is the approved version.** Day to day, keep that version fixed and only
+**0.1.3 is the current version.** Day to day, keep that version fixed and only
 increment the build number — a new build of an approved version goes straight
 to TestFlight testers without another App Review. Do **not** push a new version
 tag for this; a tag creates a new marketing version that has to be reviewed.
@@ -26,13 +26,13 @@ tag for this; a tag creates a new marketing version that has to be reviewed.
 Run it from **Actions -> Release iOS -> Run workflow**, or:
 
 ```bash
-gh workflow run release-ios.yml -f version=0.1.2
+gh workflow run release-ios.yml -f version=0.1.3
 ```
 
 Leave the build number blank and the workflow uses its run number, which only
-ever increases and is already past the last upload (build 6). Pass
+ever increases, so it is always past the last upload. Pass
 `-f build_number=<n>` only to force a specific number; it must exceed the last
-upload for 0.1.2. Manual runs upload to TestFlight only and do not create a
+upload for that version. Manual runs upload to TestFlight only and do not create a
 GitHub Release.
 
 > **Why TestFlight and not a downloadable `.ipa`?** iOS has no sideloading
