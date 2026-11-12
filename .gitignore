@@ -49,3 +49,6 @@ app.*.map.json
 
 # Nested platform build outputs (root /build/ only anchors the top level)
 **/build/
+
+# Graphify outputs
+graphify-out/
